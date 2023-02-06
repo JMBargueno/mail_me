@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 require("dotenv").config();
 const morgan = require("morgan");
-
+const compression = require("compression");
 const mail_routes = require("./routes/mail");
 const app = express();
 const limiter = rateLimit({
@@ -12,7 +12,7 @@ const limiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
-
+app.use(compression());
 app.set("port", process.env.MAILME_PORT || 7093);
 app.use(morgan("dev"));
 app.use(bodyParser.json());
